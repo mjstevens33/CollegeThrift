@@ -5,13 +5,15 @@
 {% endblock %}
 
 {% block navbar %}
-    YOUR NAV BAR AND LOGO HTML CODE HERE
+    <a class="nav-link" href="#">Home</a>
+    <a class="nav-link" href="#">Account</a>
+    <a class="nav-link" href="#">About</a>
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        YOUR FLASH_MESSAGES CODE HERE
-        OTHER GENERIC CODE THAT APPLIES TO ALL OF YOUR PAGES HERE
+        <p class="lead">Find amazing deals on your College Campus</p>
+        <a href="#" class="btn btn-primary btn-lg">Browse Listings</a>
 
         {% block app_content %}
 
@@ -20,5 +22,5 @@
 {% endblock %}
 
 {% block footer %}
-<!--- HTML Commment -->
+<span>&copy; 2023 College Thrift</span>
 {% endblock %}
