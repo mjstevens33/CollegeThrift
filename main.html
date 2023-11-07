@@ -1,73 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>College Thrift</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    /* Additional styling can be added here */
-    .navbar {
-      margin-bottom: 50px;
-    }
-    .hero-section {
-      padding: 100px 0;
-      background: #f8f9fa;
-      text-align: center;
-    }
-    .footer {
-      padding: 20px 0;
-      background: #343a40;
-      color: #fff;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
+{% extends 'bootstrap/base.html' %}
 
-  <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+{% block title %}
+    College Thrift
+{% endblock %}
+
+{% block navbar %}
+    YOUR NAV BAR AND LOGO HTML CODE HERE
+{% endblock %}
+
+{% block content %}
     <div class="container">
-      <a class="navbar-brand" href="#">CollegeThrift</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Account</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <!-- More nav items can be added here -->
-        </ul>
-      </div>
-    </div>
-  </nav>
+        YOUR FLASH_MESSAGES CODE HERE
+        OTHER GENERIC CODE THAT APPLIES TO ALL OF YOUR PAGES HERE
 
-  <!-- Hero Section -->
-  <div class="hero-section">
-    <div class="container">
-      <h1>College Thrift</h1>
-      <p class="lead">Find amazing deals on your College Campus</p>
-      <a href="#" class="btn btn-primary btn-lg">Browse Listings</a>
-    </div>
-  </div>
+        {% block app_content %}
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <span>&copy; 2023 College Thrift</span>
+        {% endblock %}
     </div>
-  </footer>
+{% endblock %}
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+{% block footer %}
+{% endblock %}
