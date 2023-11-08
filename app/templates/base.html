@@ -5,22 +5,45 @@
 {% endblock %}
 
 {% block navbar %}
-    <a class="nav-link" href="#">Home</a>
-    <a class="nav-link" href="#">Account</a>
-    <a class="nav-link" href="#">About</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">College Thrift</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <p class="lead">Find amazing deals on your College Campus</p>
-        <a href="#" class="btn btn-primary btn-lg">Browse Listings</a>
+        <header class="jumbotron my-4">
+            <h1 class="display-3">Welcome to College Thrift!</h1>
+            <p class="lead">Find amazing deals on your college campus.</p>
+            <a href="#" class="btn btn-primary btn-lg">Browse Listings</a>
+        </header>
 
         {% block app_content %}
-
+        <!-- Additional content goes here -->
         {% endblock %}
     </div>
 {% endblock %}
 
 {% block footer %}
-<span>&copy; 2023 College Thrift</span>
+    <footer class="py-3 bg-dark fixed-bottom">
+        <div class="container">
+            <p class="m-0 text-center text-white">&copy; 2023 College Thrift</p>
+        </div>
+    </footer>
 {% endblock %}
