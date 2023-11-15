@@ -31,6 +31,8 @@ class ChatLine(models.Model):
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
+    firstname = db.Column(db.String(64), index=True)
+    lastname = db.Column(db.String(64), index=True)
     password_hash = db.Column(db.String(128))
     email = db.Column(db.String(128), index=True, unique=True)
 

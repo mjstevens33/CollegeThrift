@@ -2,10 +2,29 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block app_content %}
+
     <h1>Register</h1>
     <div class="row">
         <div class="col-md-4">
             {{ wtf.quick_form(form) }}
         </div>
     </div>
+ <script type="text/javascript">
+    function validate_form(thisform) {
+        var s = thisform.email.value;
+        console.log(s)
+
+        at_pos = s.search("ithaca.edu");
+        period_pos = s.lastIndexOf(".");
+        if(at_pos === true){
+            alert("Email is formatted correctly")
+            return true;
+        }
+
+        alert("Bad Email")
+        return false;}
+ </script>
+
+<form action="" onsubmit="return validate_form(this);" method="post"></form>
+
 {% endblock %}
