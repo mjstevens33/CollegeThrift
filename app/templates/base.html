@@ -18,12 +18,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
+                {% if current_user.is_anonymous %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('register') }}">Register</a>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Loguout</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
@@ -32,7 +38,11 @@
 {% block content %}
     <div class="container">
         <header class="jumbotron my-4">
+            {% if current_user.is_anonymous %}
             <h1 class="display-3">Welcome to College Thrift!</h1>
+            {% else %}
+            <h1 class="display-3">Welcome, {{ current_user.firstname }}</h1>
+            {% endif %}
             <p class="lead">Find amazing deals on your college campus.</p>
             <a href="#" class="btn btn-primary btn-lg">Browse Listings</a>
         </header>
