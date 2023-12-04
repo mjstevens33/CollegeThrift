@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
 {% block app_content %}
+    {% if current_user.is_anonymous %}
     <H1>Please sign in or Create an account to have full access to the site.</H1>
+    {% endif %}
 {% endblock %}
