@@ -39,7 +39,7 @@
         <header class="jumbotron my-4">
             <h1 class="display-3">Welcome to College Thrift!</h1>
             <p class="lead">Find amazing deals on your college campus.</p>
-            <a href="#" class="btn btn-primary btn-lg">Browse Listings</a>
+            <a href="{{ url_for('browse') }}" class="btn btn-primary btn-lg">Browse Listings</a>
         </header>
 
         {% block app_content %}
