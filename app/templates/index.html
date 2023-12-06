@@ -34,8 +34,59 @@
     </div>
 
     <!-- Shop All button -->
-    <div class="my-4">
-        <a href="#" class="btn btn-primary btn-lg">Shop All</a>
+<!--    <div class="my-4">-->
+<!--        <a href="#" class="btn btn-primary btn-lg">Shop All</a>-->
+<!--    </div>-->
+    <div><br></div>
+
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .grid-item {
+            background-color: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .grid-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .content {
+            padding: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- Grid layout for Newest Posts -->
+    <div class="container">
+        <h2 class="title">Newest Posts</h2>
+        <div class="grid">
+            {% for post in posts %}
+                <div class="grid-item">
+                    <a href="{{ url_for('post_detail', post_id=post.id) }}">
+                        <img src="{{ url_for('static', filename='images/' + post.image) }}" alt="{{ post.title }}">
+                        <div class="content">
+                            <h2>{{ post.title }}</h2>
+                            <p>Price: {{ post.price }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}
