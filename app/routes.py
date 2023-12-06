@@ -67,3 +67,4 @@ def reset_db():
     db.session.commit()
     return render_template('index.html', title='Home')
 
+
