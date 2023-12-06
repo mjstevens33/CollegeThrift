@@ -22,8 +22,33 @@ def post_detail(post_id):
 
 @app.route('/browse')
 def browse():
-    items = Post.query.all()  # Fetch all items from the database
-    return render_template('browse.html', items=items)
+    query = request.args.get('query', '')
+    category_id = request.args.get('category', None)
+    category_name = None  # Initialize category_name
+
+    items = Post.query
+
+    if query:
+        search = "%{}%".format(query)
+        items = items.filter(
+            db.or_(
+                Post.title.ilike(search),
+                Post.description.ilike(search)
+            )
+        )
+
+    if category_id:
+        category = Category.query.get(category_id)  # Get the category object
+        if category:  # If a category is found
+            category_name = category.name  # Set category_name
+            items = items.filter_by(category_id=category.id)  # Filter items by category
+
+    items = items.all()
+    categories = Category.query.all()
+    # Pass category_name to the template
+    return render_template('browse.html', items=items, categories=categories, query=query, category_id=category_id, category_name=category_name)
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])

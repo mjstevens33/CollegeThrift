@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, SelectField, SelectMultipleField
+from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, SelectField, SelectMultipleField, DecimalField
 from wtforms.validators import DataRequired, ValidationError, EqualTo, Email
 from app.models import User
 
@@ -23,3 +23,11 @@ class RegistrationForm(FlaskForm):
         email = User.query.filter_by(email=email.data).first()
         if email is not None:
             raise ValidationError('An account already exists with this email')
+
+
+class ItemForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    price = DecimalField('Price', validators=[DataRequired(), NumberRange(min=0)])
+    category_id = SelectField('Category', coerce=int, validators=[DataRequired()])
+    submit = SubmitField('Add Item')
