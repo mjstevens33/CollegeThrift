@@ -1,6 +1,7 @@
+import os
 import urllib
 
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, current_app
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, ItemForm
 from app.models import User, Post, Category
@@ -119,11 +120,11 @@ def add_item():
             image_file.save(file_path)
 
         item = Post(
-            name=form.name.data,
+            title=form.name.data,
             description=form.description.data,
             price=form.price.data,
             category_id=form.category_id.data,
-            image_url=filename  # Assuming you have an image_url field in your Post model
+            image_url="default.jpeg" #filename   Assuming you have an image_url field in your Post model
         )
         db.session.add(item)
         db.session.commit()
