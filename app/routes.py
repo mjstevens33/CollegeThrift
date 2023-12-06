@@ -2,7 +2,7 @@ import urllib
 
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, ItemForm
 from app.models import User, Post, Category
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -89,3 +89,17 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/add_item', methods=['GET', 'POST'])
+@login_required  # Ensure only logged-in users can add items
+def add_item():
+    form = ItemForm()
+    form.category_id.choices = [(c.id, c.name) for c in Category.query.all()]
+    if form.validate_on_submit():
+        item = Post(name=form.name.data, description=form.description.data, price=form.price.data, category_id=form.category_id.data)
+        db.session.add(item)
+        db.session.commit()
+        flash('Item has been added!', 'success')
+        return redirect(url_for('browse'))
+    return render_template('add_item.html', title='Add New Item', form=form)
