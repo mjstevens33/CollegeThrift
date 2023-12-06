@@ -3,14 +3,21 @@ import urllib
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.models import User, Post, Category
 from flask_login import login_user, current_user, logout_user, login_required
+
 
 
 @app.route('/')
 @app.route('/Home')
 def Home():
-    return render_template('index.html', title='Home')
+    posts = Post.query.order_by(Post.created_at.desc()).limit(6).all()
+    return render_template('index.html', title='Home', posts=posts)
+
+@app.route('/post/<int:post_id>')
+def post_detail(post_id):
+    post = Post.query.get_or_404(post_id)  # Fetch the post or return 404 if not found
+    return render_template('post_detail.html', post=post)  # Assume you have a template named 'post_detail.html'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

@@ -1,33 +1,56 @@
-from hashlib import md5
-from app import db, login
+from . import db, login  # Use relative import
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from sqlalchemy.sql import func
 
 
-"""class Post(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    category = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+
+    def __str__(self):
+        return self.name
+
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    description = db.Column(db.Text)
+    price = db.Column(db.Numeric(10, 2))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category = db.relationship('Category', backref=db.backref('posts', lazy=True))
+    image = db.Column(db.String(256))  # Assuming image paths are stored as strings
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('posts', lazy=True))
 
     def __str__(self):
         return self.title
 
 
-class ChatLine(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver')
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    message = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+class Conversation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
     def __str__(self):
-        return f"ChatLine({self.sender}, {self.receiver}, {self.timestamp})"""""
+        return f"Conversation {self.id}"
+
+
+class ConversationMessage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    conversation_id = db.Column(db.Integer, db.ForeignKey('conversation.id'))
+    conversation = db.relationship('Conversation', backref=db.backref('messages', lazy=True))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    sender = db.relationship('User')
+    message = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime(timezone=True), server_default=func.now())
+
+    def __str__(self):
+        return f"Message from {self.sender} at {self.timestamp}"
+
+
+# User class remains the same
 
 
 class User(UserMixin, db.Model):
@@ -37,7 +60,6 @@ class User(UserMixin, db.Model):
     lastname = db.Column(db.String(64), index=True)
     password_hash = db.Column(db.String(128))
     email = db.Column(db.String(128), index=True, unique=True)
-    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -45,10 +67,6 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def avatar(self, size):
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
-            digest, size)
 
 @login.user_loader
 def load_user(id):
