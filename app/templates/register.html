@@ -8,7 +8,7 @@
         var s = thisform.email.value;
         console.log(s)
 
-        at_pos = s.search("ithaca.edu");
+        at_pos = s.contains("@ithaca.edu");
         if (at_pos !== true) {
             alert("Bad Email")
             return false;
