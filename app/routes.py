@@ -7,7 +7,7 @@ from app.models import User, Post, Category
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 
-
+# merging to main
 
 @app.route('/')
 @app.route('/Home')
