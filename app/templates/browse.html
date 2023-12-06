@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<form method="get" action="{{ url_for('browse') }}">
+    <input name="query" type="text" value="{{ query }}" placeholder="Search items...">
+    <select name="category">
+        <option value="">All Categories</option>
+        {% for category in categories %}
+            <option value="{{ category.id }}" {% if category.id == category_id %} selected {% endif %}>
+                {{ category.name }}
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Search</button>
+</form>
+{% if query %}
+    <div>
+        <h3>Search Results for: "{{ query }}"</h3>
+    </div>
+{% endif %}
+
+
+<!--{% if category_name %}-->
+<!--    <h2>Items in Category: {{ category_name }}</h2>-->
+<!--{% else %}-->
+<!--    <h2>All Items</h2>-->
+<!--{% endif %}-->
+
+
+<style>
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust the minmax values as per your requirement */
+        grid-gap: 15px; /* Space between grid items */
+        padding: 15px;
+    }
+    .grid-item {
+        border: 1px solid #ddd; /* Optional, for border around each item */
+        border-radius: 8px; /* Optional, for rounded corners */
+        overflow: hidden; /* Keeps the content inside the border */
+    }
+    .grid-item img {
+        width: 100%; /* Makes image take full width of the grid item */
+        height: auto; /* Maintains aspect ratio */
+    }
+    .content {
+        padding: 10px;
+    }
+</style>
+<div class="container">
+    {% if category_name %}
+        <h1>Items in Category: {{ category_name }}</h1>
+    {% else %}
+        <h1>All Items</h1>
+    {% endif %}
+    <div class="grid">
+        {% for item in items %}
+            <div class="grid-item">
+                <a href="{{ url_for('post_detail', post_id=item.id) }}">
+                    <img src="{{ url_for('static', filename='images/' + item.image) }}" alt="{{ item.title }}">
+                    <div class="content">
+                        <h2>{{ item.title }}</h2>
+                        <p>Price: {{ item.price }}</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

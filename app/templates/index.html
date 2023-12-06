@@ -1,37 +1,50 @@
 {% extends "base.html" %}
 
+
+
 {% block app_content %}
+
+
+
 <div class="text-center">
     <!-- Main header -->
+
     <h1 class="my-4">Our Main Categories</h1>
 
     <!-- Category boxes -->
     <div class="row">
-        <div class="col-md-4 mb-4">
+    <div class="col-md-4 mb-4">
+        <a href="{{ url_for('browse', category=3) }}"> <!-- Clothes category ID -->
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">Shop Clothes</h2>
                     <!-- Additional content like images or links -->
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
+        </a>
+    </div>
+    <div class="col-md-4 mb-4">
+        <a href="{{ url_for('browse', category=2) }}"> <!-- School category ID -->
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">Shop School</h2>
                     <!-- Additional content like images or links -->
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
+        </a>
+    </div>
+    <div class="col-md-4 mb-4">
+        <a href="{{ url_for('browse', category=1) }}"> <!-- Tech category ID -->
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">Shop Tech</h2>
                     <!-- Additional content like images or links -->
                 </div>
             </div>
-        </div>
+        </a>
     </div>
+</div>
+
 
     <!-- Shop All button -->
 <!--    <div class="my-4">-->
