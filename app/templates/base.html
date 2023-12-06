@@ -23,19 +23,21 @@
         <li class="nav-item">
           <a class="nav-link" href="#" style="color: white;">About</a>
         </li>
+          {% if current_user.is_anonymous %}
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('login') }}" style="color: white;">Login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('register') }}" style="color: white;">Register</a>
+            {% else %}
+          <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('logout') }}" style="color: white;">Logout</a>
         </li>
+          {% endif %}
       </ul>
     </div>
   </div>
 </nav>
-
-
-
 {% endblock %}
 
 {% block content %}
@@ -44,6 +46,7 @@
             <h1 class="display-3">Welcome to College Thrift!</h1>
             <p class="lead">Find amazing deals on your college campus.</p>
             <a href="{{ url_for('browse') }}" class="btn btn-primary btn-lg">Browse Listings</a>
+
         </header>
 
         {% block app_content %}
