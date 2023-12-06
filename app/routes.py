@@ -5,6 +5,8 @@ from app import app, db
 from app.forms import LoginForm, RegistrationForm, ItemForm
 from app.models import User, Post, Category
 from flask_login import login_user, current_user, logout_user, login_required
+from werkzeug.utils import secure_filename
+
 
 
 @app.route('/')
@@ -92,12 +94,25 @@ def register():
 
 
 @app.route('/add_item', methods=['GET', 'POST'])
-@login_required  # Ensure only logged-in users can add items
+# @login_required  # Ensure only logged-in users can add items
 def add_item():
     form = ItemForm()
     form.category_id.choices = [(c.id, c.name) for c in Category.query.all()]
     if form.validate_on_submit():
-        item = Post(name=form.name.data, description=form.description.data, price=form.price.data, category_id=form.category_id.data)
+        # Save the image
+        if form.image.data:
+            image_file = form.image.data
+            filename = secure_filename(image_file.filename)
+            file_path = os.path.join(current_app.root_path, 'static/images', filename)
+            image_file.save(file_path)
+
+        item = Post(
+            name=form.name.data,
+            description=form.description.data,
+            price=form.price.data,
+            category_id=form.category_id.data,
+            image_url=filename  # Assuming you have an image_url field in your Post model
+        )
         db.session.add(item)
         db.session.commit()
         flash('Item has been added!', 'success')
