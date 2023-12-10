@@ -102,6 +102,11 @@ def reset_db():
         print('Clear table {}'.format(table))
         db.session.execute(table.delete())
     db.session.commit()
+    categories = ['Tech', 'School', 'Clothes']
+    for name in categories:
+        category = Category(name=name)
+        db.session.add(category)
+    db.session.commit()
     return render_template('index.html', title='Home')
 
 
@@ -131,3 +136,7 @@ def add_item():
         flash('Item has been added!', 'success')
         return redirect(url_for('browse'))
     return render_template('add_item.html', title='Add New Item', form=form)
+
+@app.route('/about')
+def About():
+    return render_template('about.html', title='About')
