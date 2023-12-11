@@ -13,12 +13,14 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
+    image = FileField('Image', validators=[FileAllowed(['jpg', 'png'], 'Images only!')])
     firstName = StringField('First Name', validators=[DataRequired()])
     lastName = StringField('Last Name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    remember_me = BooleanField('Remember Me')
     submit = SubmitField('Register')
 
 

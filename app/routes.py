@@ -84,11 +84,17 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('Home'))
     form = RegistrationForm()
+    if form.image.data:
+        image_file = form.image.data
+        filename = secure_filename(image_file.filename)
+        file_path = os.path.join(current_app.root_path, 'static/images', filename)
+        image_file.save(file_path)
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, firstname=form.firstName.data, lastname=form.lastName.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
+        login_user(user, remember=form.remember_me.data)
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('Home'))
     return render_template('register.html', title='Register', form=form)
@@ -140,3 +146,12 @@ def add_item():
 @app.route('/about')
 def About():
     return render_template('about.html', title='About')
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    page = request.args.get('page', 1, type=int)
+    #posts = user.posts.order_by(Post.timestamp.desc()).paginate(
+       # page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
+    return render_template('user.html', user=user)
