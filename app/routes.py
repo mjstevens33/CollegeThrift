@@ -18,6 +18,7 @@ def Home():
 
 
 @app.route('/post/<int:post_id>')
+@login_required
 def post_detail(post_id):
     post = Post.query.get_or_404(post_id)  # Fetch the post or return 404 if not found
     return render_template('post_detail.html', post=post)  # Assume you have a template named 'post_detail.html'
@@ -84,11 +85,11 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('Home'))
     form = RegistrationForm()
-    if form.image.data:
-        image_file = form.image.data
-        filename = secure_filename(image_file.filename)
-        file_path = os.path.join(current_app.root_path, 'static/images', filename)
-        image_file.save(file_path)
+    #if form.image.data:
+        #image_file = form.image.data
+        #filename = secure_filename(image_file.filename)
+        #file_path = os.path.join(current_app.root_path, 'static/images', filename)
+        #image_file.save(file_path)
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, firstname=form.firstName.data, lastname=form.lastName.data)
         user.set_password(form.password.data)
@@ -124,18 +125,18 @@ def add_item():
     form.category_id.choices = [(c.id, c.name) for c in Category.query.all()]
     if form.validate_on_submit():
         # Save the image
-        if form.image.data:
-            image_file = form.image.data
-            filename = secure_filename(image_file.filename)
-            file_path = os.path.join(current_app.root_path, 'static/images', filename)
-            image_file.save(file_path)
+        #if form.image.data:
+            #image_file = form.image.data
+            #filename = secure_filename(image_file.filename)
+            #file_path = os.path.join(current_app.root_path, 'static/images', filename)
+            #image_file.save(file_path)
 
         item = Post(
             title=form.name.data,
             description=form.description.data,
             price=form.price.data,
             category_id=form.category_id.data,
-            image_url="default.jpeg" #filename   Assuming you have an image_url field in your Post model
+            #image="default.jpeg" #filename   Assuming you have an image_url field in your Post model
         )
         db.session.add(item)
         db.session.commit()

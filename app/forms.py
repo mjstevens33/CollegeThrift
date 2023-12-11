@@ -13,7 +13,7 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    image = FileField('Image', validators=[FileAllowed(['jpg', 'png'], 'Images only!')])
+    #image = FileField('Image', validators=[FileAllowed(['jpg', 'png'], 'Images only!')])
     firstName = StringField('First Name', validators=[DataRequired()])
     lastName = StringField('Last Name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
@@ -41,5 +41,5 @@ class ItemForm(FlaskForm):
     price = DecimalField('Price', validators=[DataRequired(), NumberRange(min=0)])
     category_id = SelectField('Category', coerce=int, validators=[DataRequired()])
     submit = SubmitField('Add Item')
-    image = FileField('Image', validators=[FileAllowed(['jpg', 'png'], 'Images only!')])
+    #image = FileField('Image', validators=[FileAllowed(['jpg', 'png'], 'Images only!')])
     submit = SubmitField('Add Item')

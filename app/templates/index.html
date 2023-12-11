@@ -91,7 +91,6 @@
             {% for post in posts %}
                 <div class="grid-item">
                     <a href="{{ url_for('post_detail', post_id=post.id) }}">
-                        <img src="{{ url_for('static', filename='images/' + post.image) }}" alt="{{ post.title }}">
                         <div class="content">
                             <h2>{{ post.title }}</h2>
                             <p>Price: {{ post.price }}</p>

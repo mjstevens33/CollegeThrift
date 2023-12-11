@@ -23,10 +23,7 @@
     <form action="" onsubmit="return validate_form(this);" method="post">
         {{ form.hidden_tag() }}
 
-        <p>
-            {{ form.image.label }}<br>
-            {{ form.image() }}
-        </p>
+
         <p>
             {{ form.firstName.label }}<br>
             {{ form.firstName(size=32) }}<br>

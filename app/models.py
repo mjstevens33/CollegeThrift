@@ -7,6 +7,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.sql import func
 
 
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -26,7 +30,7 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('posts', lazy=True))
+
 
     def __str__(self):
         return self.title
@@ -65,7 +69,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(128), index=True, unique=True)
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     image = db.Column(db.String(256))
-    #posts = db.relationship('Post', backref='author', lazy='dynamic')
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -79,6 +83,4 @@ class User(UserMixin, db.Model):
             digest, size)
 
 
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+
